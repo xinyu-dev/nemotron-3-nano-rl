@@ -2036,6 +2036,10 @@ class MegatronPolicyWorker(AbstractPolicyWorker, ColocatablePolicyInterface):
     @wrap_with_nvtx_name("megatron_policy_worker/prepare_refit_info")
     def prepare_refit_info(self) -> None:
         """Prepare state dict metadata for weight refitting and IPC streaming."""
+        # Offload optimizer and grad buffers before the TP/EP all-gathers so
+        # there is enough free VRAM for the gather destination buffers.
+        self.offload_before_refit()
+
         self.refit_param_info_mcore = self._calculate_refit_param_info()
 
         # Collect tensor metadata for refit / hf side info
@@ -2043,6 +2047,9 @@ class MegatronPolicyWorker(AbstractPolicyWorker, ColocatablePolicyInterface):
         # Reuse shared iterator that appends FP8 KV/Q scales when enabled
         for name, tensor in self._iter_params_with_optional_kv_scales():
             refit_param_info_hf[name] = (tensor.shape, tensor.dtype)
+
+        # Reload optimizer so the worker is ready for training after setup.
+        self.prepare_for_training()
 
         return refit_param_info_hf
 

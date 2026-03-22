@@ -128,6 +128,7 @@ COMMON_SRUN_ARGS+=" --mpi=pmix"
 COMMON_SRUN_ARGS+=" --container-mounts=$MOUNTS"
 COMMON_SRUN_ARGS+=" --container-image=$CONTAINER"
 COMMON_SRUN_ARGS+=" --container-workdir=$SLURM_SUBMIT_DIR"
+COMMON_SRUN_ARGS+=" --container-writable"
 # TODO: delete these (just for debugging)
 COMMON_SRUN_ARGS+=" -p $SLURM_JOB_PARTITION"
 COMMON_SRUN_ARGS+=" -A $SLURM_JOB_ACCOUNT"
