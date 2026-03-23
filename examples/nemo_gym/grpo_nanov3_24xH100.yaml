@@ -75,7 +75,7 @@ policy:
   tokenizer:
     name: ${policy.model_name} ## specify if you'd like to use a tokenizer different from the model's default
   train_global_batch_size: 96
-  train_micro_batch_size: 2  # Retry at 2 with reduced vllm gpu_memory_utilization (0.4→0.3) to free ~8GB/GPU
+  train_micro_batch_size: 1  # OOM at 2 even with gpu_memory_utilization=0.3; reverted
   generation_batch_size: 64 # Only used when generating using HF backend
   logprob_batch_size: 4  # Increased from 1; inference-only so can match train_micro_batch_size
   max_total_sequence_length: 8192
