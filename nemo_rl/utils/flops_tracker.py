@@ -24,7 +24,7 @@ from transformers.models.qwen2.configuration_qwen2 import Qwen2Config
 from transformers.models.qwen3.configuration_qwen3 import Qwen3Config
 from transformers.models.qwen3_moe.configuration_qwen3_moe import Qwen3MoeConfig
 
-from nemo_rl.utils.flops_formulas import FLOPSConfig, deepseekv3, llama, qwen2, qwen3
+from nemo_rl.utils.flops_formulas import FLOPSConfig, deepseekv3, llama, nemotronh, qwen2, qwen3
 
 
 def get_default_hf_config(model_name: str) -> PretrainedConfig:
@@ -96,6 +96,26 @@ def convert_config_to_flops_config(
             mtp_num_layers=0,
             causal_self_attn=True,
         ), deepseekv3
+    elif config.__class__.model_type == "nemotron_h":
+        return FLOPSConfig(
+            gbs=0,
+            hs=config.hidden_size,
+            layers=config.num_hidden_layers,
+            ffn_hs=config.intermediate_size,
+            attention_heads=config.num_attention_heads,
+            query_groups=config.num_key_value_heads,
+            vocab_size=config.vocab_size,
+            mamba_state_dim=config.ssm_state_size,
+            mamba_head_dim=config.mamba_head_dim,
+            mamba_num_heads=config.mamba_num_heads,
+            mamba_num_groups=config.n_groups,
+            moe_ffn_hidden_size=config.moe_intermediate_size,
+            moe_shared_expert_intermediate_size=config.moe_shared_expert_intermediate_size,
+            moe_num_experts=config.n_routed_experts,
+            moe_router_topk=config.num_experts_per_tok,
+            is_hybrid_model=True,
+            hybrid_override_pattern=config.hybrid_override_pattern,
+        ), nemotronh
     else:
         raise ValueError(f"Unsupported config type: {type(config)}")
 

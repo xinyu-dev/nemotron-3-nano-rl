@@ -49,6 +49,7 @@ class FLOPSConfig:
     moe_layer_freq: Optional[Union[int, List[int]]] = None
     moe_shared_expert_intermediate_size: Optional[int] = None
     moe_ffn_hidden_size: Optional[int] = None
+    moe_num_experts: Optional[int] = None
     mtp_num_layers: Optional[int] = None
     causal_self_attn: Optional[bool] = None
     is_hybrid_model: bool = False
@@ -495,6 +496,27 @@ def _non_mla_attn_layer_flops(config: FLOPSConfig):
     )
 
 
+def _moe_layer_flops(config: FLOPSConfig):
+    """Model FLOPs for a MoE layer with optional shared expert."""
+    assert config.moe_ffn_hidden_size is not None
+    assert config.moe_router_topk is not None
+    # Router (gate): linear projection hidden_size -> num_experts to score each expert
+    gate_flops = 0
+    if config.moe_num_experts is not None:
+        gate_flops = 6 * config.gbs * config.enc_seq_len * config.hs * config.moe_num_experts
+    # Routed experts: top-k experts active per token (3 weight matrices for gated MLP)
+    routed_flops = (
+        6 * config.gbs * config.enc_seq_len * config.hs * config.moe_ffn_hidden_size * 3 * config.moe_router_topk
+    )
+    # Shared expert (always active)
+    shared_flops = 0
+    if config.moe_shared_expert_intermediate_size is not None:
+        shared_flops = (
+            6 * config.gbs * config.enc_seq_len * config.hs * config.moe_shared_expert_intermediate_size * 3
+        )
+    return gate_flops + routed_flops + shared_flops
+
+
 def _mamba_layer_flops(config: FLOPSConfig):
     """Model FLOPs for Mamba layer. We ignore part of the flops of scan because the chunk size is not known from model config."""
     assert config.mamba_state_dim is not None
@@ -523,7 +545,7 @@ def _hybrid_model_flops(config: FLOPSConfig):
     assert config.is_hybrid_model == True
     assert config.hybrid_override_pattern is not None
 
-    num_attn_layers, num_mamba_layers, num_mlp_layers = 0, 0, 0
+    num_attn_layers, num_mamba_layers, num_mlp_layers, num_moe_layers = 0, 0, 0, 0
     for c in config.hybrid_override_pattern:
         if c == "M":
             num_mamba_layers += 1
@@ -531,12 +553,17 @@ def _hybrid_model_flops(config: FLOPSConfig):
             num_mlp_layers += 1
         elif c == "*":
             num_attn_layers += 1
-    return (
+        else:  # "E" or other MoE layer markers
+            num_moe_layers += 1
+    total = (
         num_attn_layers * _non_mla_attn_layer_flops(config)
         + num_mamba_layers * _mamba_layer_flops(config)
-        + num_mlp_layers * _mlp_layer_flops(config)
+        + num_moe_layers * _moe_layer_flops(config) # added this
         + 6 * config.gbs * config.enc_seq_len * config.hs * config.vocab_size
     )
+    if num_mlp_layers > 0:
+        total += num_mlp_layers * _mlp_layer_flops(config)
+    return total
 
 
 def nemotronh(config: FLOPSConfig):
