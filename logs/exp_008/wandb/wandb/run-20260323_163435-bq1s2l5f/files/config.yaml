@@ -1,0 +1,367 @@
+_wandb:
+    value:
+        cli_version: 0.21.1
+        e:
+            dokxa4ha5rqyyi8llz4huabz7m0gmtbz:
+                args:
+                    - --config
+                    - examples/nemo_gym/grpo_nanov3_24xH100.yaml
+                codePath: examples/nemo_gym/run_grpo_nemo_gym.py
+                codePathLocal: examples/nemo_gym/run_grpo_nemo_gym.py
+                cpu_count: 104
+                cpu_count_logical: 208
+                cudaVersion: "12.4"
+                disk:
+                    /:
+                        total: "6388345036800"
+                        used: "230048968704"
+                email: xinyu18018@gmail.com
+                executable: /opt/nemo_rl_venv/bin/python3
+                git:
+                    commit: 694d6ec7411d8703ef21a84c155920c5a5a12367
+                    remote: https://github.com/xinyu-dev/nemotron-3-nano-rl.git
+                gpu: NVIDIA H100 80GB HBM3
+                gpu_count: 8
+                gpu_nvidia:
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-381ddd35-5bae-de69-5bab-9c0d01c65316
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-2f0785c5-aa45-8cc8-74e2-67f0373e02ab
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-9f3f4196-24cd-f2b0-c31b-e713a1fc2a35
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-c67275be-9dd1-376f-b921-94950b5e59dc
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-908778b1-d3a4-c133-6193-0ec376f7deed
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-e8a2cb95-bb17-38dc-5f84-222a26bd7c46
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-1fb08978-8088-b1ee-4a8e-8bc30d80b315
+                    - architecture: Hopper
+                      cudaCores: 16896
+                      memoryTotal: "85520809984"
+                      name: NVIDIA H100 80GB HBM3
+                      uuid: GPU-e95e2c1e-28ce-e011-e5f4-3a1a0cbf635b
+                host: xiyu-nemo-rl-training-head-bx5s7
+                memory:
+                    total: "1978467614720"
+                os: Linux-6.1.90+-x86_64-with-glibc2.39
+                program: /workspace/nemotron-3-nano-rl/examples/nemo_gym/run_grpo_nemo_gym.py
+                python: CPython 3.12.12
+                root: logs/exp_008/wandb
+                startedAt: "2026-03-23T16:34:35.855849Z"
+                writerId: dokxa4ha5rqyyi8llz4huabz7m0gmtbz
+        m:
+            - "2": ray/*
+              "5": 2
+              "6":
+                - 1
+              "7": []
+            - "1": ray/ray_step
+              "6": []
+              "7": []
+        python_version: 3.12.12
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 30
+                - 41
+                - 49
+                - 50
+                - 51
+                - 53
+                - 71
+                - 105
+            "2":
+                - 1
+                - 5
+                - 11
+                - 30
+                - 41
+                - 49
+                - 50
+                - 51
+                - 53
+                - 71
+                - 105
+            "3":
+                - 7
+                - 13
+                - 61
+            "4": 3.12.12
+            "5": 0.21.1
+            "6": 4.57.1
+            "12": 0.21.1
+            "13": linux-x86_64
+checkpointing:
+    value:
+        checkpoint_dir: results/grpo
+        checkpoint_must_save_by: "00:00:50:00"
+        enabled: false
+        higher_is_better: true
+        keep_top_k: 1000000
+        metric_name: val:total_reward/mean
+        save_period: 10
+cluster:
+    value:
+        gpus_per_node: 8
+        num_nodes: 3
+data:
+    value:
+        num_workers: 1
+        shuffle: false
+        train_jsonl_fpath: /workspace/data/nano3-data/data/train-split.jsonl
+        validation_jsonl_fpath: /workspace/data/nano3-data/data/val-split.jsonl
+env:
+    value:
+        nemo_gym:
+            code_gen:
+                resources_servers:
+                    code_gen:
+                        debug: false
+                        num_processes: 1024
+                        unit_test_timeout_secs: 10
+            config_paths:
+                - responses_api_models/vllm_model/configs/vllm_model_for_training.yaml
+                - resources_servers/math_with_judge/configs/math_with_judge.yaml
+                - resources_servers/code_gen/configs/code_gen.yaml
+                - resources_servers/workplace_assistant/configs/workplace_assistant.yaml
+                - resources_servers/mcqa/configs/mcqa.yaml
+                - resources_servers/instruction_following/configs/instruction_following.yaml
+                - resources_servers/structured_outputs/configs/structured_outputs_json.yaml
+            math_with_judge:
+                resources_servers:
+                    math_with_judge:
+                        judge_model_server:
+                            name: policy_model
+                        should_use_judge: false
+        should_use_nemo_gym: true
+grpo:
+    value:
+        async_grpo:
+            enabled: false
+            max_trajectory_age_steps: 1
+        batch_multiplier: 1
+        best_at_k_k: 8
+        best_at_k_m: 1000
+        combined_training_best_at_k_weight: 0.2
+        combined_training_pass_at_1_weight: 1
+        combined_training_weight_mode: auto
+        dynamic_sampling_oversample_ratio: 1
+        max_num_epochs: 1
+        max_num_steps: 10
+        max_rollout_turns: 1
+        max_val_samples: 1000
+        normalize_rewards: true
+        num_generations_per_prompt: 8
+        num_prompts_per_step: 12
+        num_val_generations_per_prompt: 4
+        overlong_filtering: true
+        reward_scaling:
+            enabled: false
+        reward_shaping:
+            enabled: false
+        seed: 42
+        seq_logprob_error_threshold: 2
+        use_best_at_k: false
+        use_combined_training: false
+        use_dynamic_sampling: false
+        use_leave_one_out_baseline: true
+        val_at_start: false
+        val_batch_size: 1000
+        val_period: 10000
+logger:
+    value:
+        gpu_monitoring:
+            collection_interval: 10
+            flush_interval: 10
+        log_dir: logs/exp_008
+        mlflow:
+            experiment_name: grpo-dev
+            run_name: grpo-dev-logger
+        mlflow_enabled: false
+        monitor_gpus: true
+        num_val_samples_to_print: 0
+        swanlab_enabled: false
+        tensorboard_enabled: false
+        wandb:
+            name: grpo-dev-logger
+            project: grpo-dev
+        wandb_enabled: true
+loss_fn:
+    value:
+        kl_input_clamp_value: null
+        kl_output_clamp_value: null
+        ratio_clip_c: null
+        ratio_clip_max: 0.28
+        ratio_clip_min: 0.2
+        reference_policy_kl_penalty: 0
+        reference_policy_kl_type: k3
+        sequence_level_importance_ratios: false
+        token_level_loss: true
+        truncated_importance_sampling_ratio: null
+        use_importance_sampling_correction: true
+        use_on_policy_kl_approximation: true
+policy:
+    value:
+        dtensor_cfg:
+            _v2: true
+            activation_checkpointing: false
+            context_parallel_size: 1
+            cpu_offload: false
+            custom_parallel_plan: null
+            enabled: false
+            sequence_parallel: false
+            tensor_parallel_size: 1
+        dynamic_batching:
+            enabled: false
+            logprob_mb_tokens: 8192
+            sequence_length_round: 64
+            train_mb_tokens: 8192
+        generation:
+            _pad_token_id: 11
+            backend: vllm
+            colocated:
+                enabled: true
+                resources:
+                    gpus_per_node: null
+                    num_nodes: null
+            max_new_tokens: 8192
+            stop_strings: null
+            stop_token_ids: null
+            temperature: 1
+            top_k: null
+            top_p: 1
+            vllm_cfg:
+                async_engine: true
+                enforce_eager: false
+                expert_parallel_size: 1
+                expose_http_server: true
+                gpu_memory_utilization: 0.3
+                http_server_serving_chat_kwargs:
+                    enable_auto_tools: true
+                    reasoning_parser: deepseek_r1
+                    tool_parser: qwen3_coder
+                kv_cache_dtype: auto
+                load_format: dummy
+                max_model_len: 8192
+                num_first_layers_in_bf16: 0
+                num_last_layers_in_bf16: 0
+                pipeline_parallel_size: 1
+                precision: bfloat16
+                skip_tokenizer_init: false
+                tensor_parallel_size: 4
+                use_deep_gemm: false
+            vllm_kwargs:
+                compilation_config:
+                    use_inductor: false
+                mamba_ssm_cache_dtype: float32
+        generation_batch_size: 64
+        logprob_batch_size: 1
+        logprob_chunk_size: 512
+        make_sequence_length_divisible_by: 2
+        max_grad_norm: 1
+        max_total_sequence_length: 8192
+        megatron_cfg:
+            activation_checkpointing: true
+            apply_rope_fusion: true
+            bias_activation_fusion: false
+            calculate_per_token_loss: true
+            context_parallel_size: 1
+            cp_normalize: true
+            defer_fp32_logits: true
+            distributed_data_parallel_config:
+                average_in_collective: false
+                data_parallel_sharding_strategy: optim_grads_params
+                grad_reduce_in_fp32: false
+                overlap_grad_reduce: true
+                overlap_param_gather: true
+                use_custom_fsdp: false
+            do_not_average_loss: true
+            empty_unused_memory_level: 2
+            enabled: true
+            env_vars: null
+            expert_model_parallel_size: 2
+            expert_tensor_parallel_size: 2
+            freeze_moe_router: true
+            moe_aux_loss_coeff: 0
+            moe_enable_deepep: false
+            moe_per_layer_logging: true
+            moe_permute_fusion: true
+            moe_router_bias_update_rate: 0.001
+            moe_router_dtype: fp32
+            moe_router_enable_expert_bias: true
+            moe_router_load_balancing_type: none
+            moe_token_dispatcher_type: alltoall
+            num_layers_in_first_pipeline_stage: null
+            num_layers_in_last_pipeline_stage: null
+            num_moe_experts: 128
+            optimizer:
+                adam_beta1: 0.9
+                adam_beta2: 0.999
+                adam_eps: 1e-08
+                bf16: true
+                clip_grad: 1
+                fp16: false
+                lr: 3e-06
+                min_lr: 3e-06
+                optimizer: adam
+                optimizer_cpu_offload: true
+                optimizer_offload_fraction: 1
+                params_dtype: float32
+                sgd_momentum: 0.9
+                use_distributed_optimizer: true
+                use_precision_aware_optimizer: true
+                weight_decay: 0
+            pipeline_dtype: bfloat16
+            pipeline_model_parallel_size: 1
+            scale_loss_by_dp_cp_size: false
+            scheduler:
+                end_weight_decay: 0
+                lr_decay_iters: null
+                lr_decay_style: constant
+                lr_warmup_init: 3e-07
+                lr_warmup_iters: 2
+                start_weight_decay: 0
+                weight_decay_incr_style: constant
+            sequence_parallel: true
+            tensor_model_parallel_size: 2
+            track_moe_metrics: true
+        model_name: /workspace/models/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+        offload_optimizer_for_logprob: true
+        optimizer: null
+        precision: bfloat16
+        scheduler: null
+        sequence_packing:
+            algorithm: modified_first_fit_decreasing
+            enabled: true
+            logprob_mb_tokens: 8192
+            sequence_length_round: 64
+            train_mb_tokens: 8192
+        tokenizer:
+            name: /workspace/models/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+        train_global_batch_size: 96
+        train_micro_batch_size: 1
