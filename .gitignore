@@ -46,3 +46,25 @@ code_snapshots*/
 # Runtime env
 *runtime_env.yaml
 !default_runtime_env.yaml
+
+# Track only specific wandb run files for experiments (un-ignore each dir in the chain first)
+!logs/
+!logs/*/
+!logs/*/wandb/
+!logs/*/wandb/wandb/
+!logs/*/wandb/wandb/run-*/
+!logs/*/wandb/wandb/run-*/files/
+!logs/*/wandb/wandb/run-*/files/config.yaml
+!logs/*/wandb/wandb/run-*/files/output.log
+!logs/*/wandb/wandb/run-*/files/requirements.txt
+!logs/*/wandb/wandb/run-*/files/wandb-metadata.json
+!logs/*/wandb/wandb/run-*/files/wandb-summary.json
+# Re-ignore everything else exposed by the above rules
+logs/**/*.jsonl
+logs/**/run-*.wandb
+logs/**/media/
+logs/**/latest-run
+logs/**/tmp/
+logs/**/uncommitted_changes_diff.txt
+logs/**/debug.log
+logs/**/debug-internal.log
